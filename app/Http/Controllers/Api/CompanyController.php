@@ -52,9 +52,13 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUpdateCompany $request, string $uuid)
     {
-        //
+        $company = $this->repository->where('uuid', $uuid)->firstOrFail();
+
+        $company->update($request->validated());
+
+        return response()->json(['message' => 'success']);
     }
 
     /**
