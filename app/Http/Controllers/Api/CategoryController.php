@@ -42,24 +42,34 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $url)
     {
-        //
+        $category = $this->repository->where('url', $url)->firstOrFail();
+
+        return new CategoryResource($category);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUpdateCategory $request, string $url)
     {
-        //
+        $category = $this->repository->where('url', $url)->firstOrFail();
+
+        $category->update($request->validated());
+
+        return response()->json(['message' => 'success']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $url)
     {
-        //
+        $category = $this->repository->where('url', $url)->firstOrFail();
+
+        $category->delete();
+
+        return response()->json([], 204);
     }
 }
