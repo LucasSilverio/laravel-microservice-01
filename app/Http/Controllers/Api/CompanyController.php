@@ -64,8 +64,12 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $uuid)
     {
-        //
+        $company = $this->repository->where('uuid', $uuid);
+
+        $company->delete();
+
+        return response()->json([], 204);
     }
 }
